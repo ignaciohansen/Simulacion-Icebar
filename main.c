@@ -335,22 +335,24 @@ printf("Buscando puesto primer piso\n");
    return j;
 }
 
+//TODO
 float tiempoAtencion()
 {
 
-    float R = (rand()%100)/100;
-    float TA = 3.0 + 3.377 * pow(R,0.8595);
-
-    printf("Tiempo de atencion:%f\n",TA);
-
-    return TA;
+    return 1;
 }
 
 float intervaloArribos()
 {
-    return 1.0;
+    float R = (rand()%100)/100;
+    float IA = 3.0 + 3.377 * pow(R,0.8595);
+
+    printf("Intervalo entre Arribos:%f\n",IA);
+
+    return IA;
 }
 
+//TODO
 float intervaloPrimerPisoACamaraHielo()
 {
     return 1.0;
