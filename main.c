@@ -3,15 +3,16 @@
 #include <time.h>
 #include <math.h>
 
+
+//Variables de Control
+#define EMPLEADOS_BARRA_PRIMER_PISO 3
+#define EMPLEADOS_BARRA_HIELO 4
+#define PORCENTAJE_DESCUENTO_CLASICO 60
+#define PORCENTAJE_DESCUENTO_ESPECIAL 30
+
 #define TIEMPO_FINAL 100000
 
 #define MINUTOS_SEMANA 10080
-
-#define EMPLEADOS_BARRA_PRIMER_PISO 3
-#define EMPLEADOS_BARRA_HIELO 4
-
-#define PORCENTAJE_DESCUENTO_CLASICO 60
-#define PORCENTAJE_DESCUENTO_ESPECIAL 30
 
 #define SALIDA_BARRA_PRIMER_PISO 1
 #define SALIDA_BARRA_HIELO 2
@@ -37,12 +38,14 @@ float SPSN = 0;
 float SPSM = 0;
 float STAN = 0;
 float STAM = 0;
-float GPE = 0;
-float GPC = 0;
-int NSN = 0;
-int NSM = 0;
 int NTN = 0;
 int NTM = 0;
+
+//Variables de estado
+int NSN = 0;
+int NSM = 0;
+float GPE = 0;
+float GPC = 0;
 
 //Resultados
 float PECN = 0;
@@ -217,7 +220,7 @@ void llegada()
 
     float R = rand() % 100;
 
-    if(R<=75)llegadaBarraCamaraHielo();
+    if(R<=75)llegadaBarraCamaraHielo(0);
     else llegadaBarraPrimerPiso();
 
     return;
@@ -335,7 +338,7 @@ printf("Buscando puesto primer piso\n");
    return j;
 }
 
-//TODO
+//TODOc
 float tiempoAtencion()
 {
 
