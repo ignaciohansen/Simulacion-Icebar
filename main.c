@@ -6,7 +6,7 @@
 
 //Variables de Control
 #define EMPLEADOS_BARRA_PRIMER_PISO 1
-#define EMPLEADOS_BARRA_HIELO 2
+#define EMPLEADOS_BARRA_HIELO 4
 #define PORCENTAJE_DESCUENTO_CLASICO 60.00
 #define PORCENTAJE_DESCUENTO_ESPECIAL 30.00
 
@@ -143,6 +143,11 @@ void imprimirResultados()
         printf("PTOM %d: %f\n",i,PTOM[i]);
     }
     printf("Cantidad de empleados en la barra del primer piso:%d\nCantidad de empleados en la barra de hielo:%d\n",EMPLEADOS_BARRA_PRIMER_PISO,EMPLEADOS_BARRA_HIELO);
+    printf("Porcentaje descuento tragos clasico:%f\n",PORCENTAJE_DESCUENTO_CLASICO);
+    printf("Porcentaje descuento tragos especiales:%f\n",PORCENTAJE_DESCUENTO_ESPECIAL);
+
+    printf("Cantidad de clientes atendidos en la barra del primer piso:%d\n",NTN);
+    printf("Cantidad de clientes atendidos en la barra de la camara de hielo:%d\n",NTM);
     return;
 }
 
@@ -150,8 +155,8 @@ void salidaBarraPrimerPiso(int puestoBarraPrimerPiso)
 {
     printf("Salida barra primer piso\n");
 
-    SPSN += (TPSN[puestoBarraPrimerPiso] - T) * EMPLEADOS_BARRA_PRIMER_PISO;
-    SPSM += (TPSN[puestoBarraPrimerPiso] - T) * EMPLEADOS_BARRA_HIELO;
+    SPSN += (TPSN[puestoBarraPrimerPiso] - T) * NSN;
+    SPSM += (TPSN[puestoBarraPrimerPiso] - T) * NSM;
 
     T = TPSN[puestoBarraPrimerPiso];
 
@@ -185,8 +190,8 @@ void salidaBarraPrimerPiso(int puestoBarraPrimerPiso)
 void salidaBarraCamaraHielo(int puestoBarraCamaraHielo)
 {
     printf("Salida barra camara hielo\n");
-    SPSN += (TPSM[puestoBarraCamaraHielo] - T) * EMPLEADOS_BARRA_PRIMER_PISO;
-    SPSM += (TPSM[puestoBarraCamaraHielo] - T) * EMPLEADOS_BARRA_HIELO;
+    SPSN += (TPSM[puestoBarraCamaraHielo] - T) * NSN;
+    SPSM += (TPSM[puestoBarraCamaraHielo] - T) * NSM;
 
     T = TPSM[puestoBarraCamaraHielo];
 
@@ -216,8 +221,8 @@ void salidaBarraCamaraHielo(int puestoBarraCamaraHielo)
 void llegada()
 {
     printf("Llegada\n");
-    SPSN += (TPLL - T) * EMPLEADOS_BARRA_PRIMER_PISO;
-    SPSM += (TPLL - T) * EMPLEADOS_BARRA_HIELO;
+    SPSN += (TPLL - T) * NSN;
+    SPSM += (TPLL - T) * NSM;
 
     T = TPLL;
 
