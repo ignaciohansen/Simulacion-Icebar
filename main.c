@@ -58,9 +58,9 @@ int main()
 
     iniciarCondicionesIniciales();
 
-    //while (T <= TF)
-   // {
-
+    while (T <= TF)
+    {
+        printf("\nTIEMPO:%d\n",T);
         int puestoBarraPrimerPiso = buscarMinimoTPSPrimerPiso();
         int puestoBarraCamaraHielo = buscarMinimoTPSCamaraHielo();
 
@@ -76,7 +76,7 @@ int main()
             break;
         default: break;
         }
-   //}
+   }
 
     calcularResultados();
     imprimirResultados();
@@ -90,6 +90,7 @@ int main()
 void calcularResultados()
 {
     printf("Calculando resultados\n");
+
     PECN = (SPSN - STAN) / NTN;
     PECM = (SPSM - STAM) / NTM;
 
@@ -368,8 +369,8 @@ printf("Inicio de condiciones\n");
     T = 0;
     TF = TIEMPO_FINAL;
     TPLL = 0;
-    for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) TPSN[i]=0;
-    for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)TPSM[i]=0;
+    for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) TPSN[i]=HIGH_VALUE;
+    for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)TPSM[i]=HIGH_VALUE;
 
     for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) ITON[i]=0;
     for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)ITOM[i]=0;
