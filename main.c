@@ -5,8 +5,8 @@
 
 
 //Variables de Control
-#define EMPLEADOS_BARRA_PRIMER_PISO 1
-#define EMPLEADOS_BARRA_HIELO 1
+#define EMPLEADOS_BARRA_PRIMER_PISO 4
+#define EMPLEADOS_BARRA_HIELO 4
 #define PORCENTAJE_DESCUENTO_CLASICO 60.00
 #define PORCENTAJE_DESCUENTO_ESPECIAL 30.00
 
@@ -348,7 +348,7 @@ printf("Buscando puesto primer piso\n");
 float tiempoAtencion()
 {
     float R = (rand()%100) / 100.00;
-    float TA = 3.0 + 3.377 * pow(R,1/0.8595); 
+    float TA = 3.0 + 3.377 * pow(R,1/0.8595);
     printf("Tiempo de atencion:%f\n",TA);
     return TA;
 }
@@ -356,7 +356,7 @@ float tiempoAtencion()
 float intervaloArribos()
 {
     float R = (rand()%100) / 100.00;
-    float IA = 2,9114 + 6.9886 * pow(R,1/0,74772);
+    float IA = 2.9114 + 6.9886 * pow(R,1/0.74772);
     printf("Intervalo entre Arribos:%f\n",IA);
     return IA;
 }
@@ -365,7 +365,7 @@ float intervaloArribos()
 float intervaloPrimerPisoACamaraHielo()
 {
     float R = (rand()%100) / 100.00;
-    float IPH = 20.1 + 19.9 * pow(R,1/0,92297);
+    float IPH = 20.1 + 19.9 * pow(R,1/0.92297);
     printf("Intervalo entre primer piso y camara de hielo:%f\n",IPH);
     return IPH;
 }
