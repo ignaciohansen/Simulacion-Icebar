@@ -5,7 +5,7 @@
 
 
 //Variables de Control
-#define EMPLEADOS_BARRA_PRIMER_PISO 1
+#define EMPLEADOS_BARRA_PRIMER_PISO 4
 #define EMPLEADOS_BARRA_HIELO 4
 #define PORCENTAJE_DESCUENTO_CLASICO 60.00
 #define PORCENTAJE_DESCUENTO_ESPECIAL 30.00
@@ -15,7 +15,7 @@
 
 #define CANTIDAD_TRAGOS_PROMO 2.00
 
-#define TIEMPO_FINAL 1000.00
+#define TIEMPO_FINAL 20160.00
 
 #define MINUTOS_SEMANA 10080.00
 
@@ -419,8 +419,8 @@ printf("Inicio de condiciones\n");
     for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) ITON[i]=0;
     for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)ITOM[i]=0;
 
-    for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) STON[i]=0;
-    for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)STOM[i]=0;
+    for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) STON[i]=HIGH_VALUE;
+    for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)STOM[i]=HIGH_VALUE;
 
     for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) PTON[i]=0;
     for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)PTOM[i]=0;
