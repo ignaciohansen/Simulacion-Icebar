@@ -13,6 +13,8 @@
 #define PRECIO_TRAGO_CLASICO 120.00
 #define PRECIO_TRAGO_ESPECIAL 160.00
 
+#define CANTIDAD_TRAGOS_PROMO 2.00
+
 #define TIEMPO_FINAL 1000.00
 
 #define MINUTOS_SEMANA 10080.00
@@ -266,7 +268,7 @@ void llegadaBarraPrimerPiso()
 
        STAN += TA;
 
-       STON[puestoBarraPrimerPiso] += T - ITOM[puestoBarraPrimerPiso];
+       STON[puestoBarraPrimerPiso] += T - ITON[puestoBarraPrimerPiso];
 
        compra();
     }
@@ -378,14 +380,14 @@ void compra()
 
         if(R <= 80)
         {
-            float OPC = (PRECIO_TRAGO_CLASICO * 2) * (PORCENTAJE_DESCUENTO_CLASICO / 100.00);
+            float OPC = (PRECIO_TRAGO_CLASICO * CANTIDAD_TRAGOS_PROMO) * (PORCENTAJE_DESCUENTO_CLASICO / 100.00);
             GPC += OPC;
 
             printf("Comprando promocion clasica a:%f\n",OPC);
         }
         else
         {
-            float OPE =  (PRECIO_TRAGO_ESPECIAL * 2) * (PORCENTAJE_DESCUENTO_ESPECIAL /100.00);
+            float OPE =  (PRECIO_TRAGO_ESPECIAL * CANTIDAD_TRAGOS_PROMO) * (PORCENTAJE_DESCUENTO_ESPECIAL /100.00);
             GPE += OPE;
 
             printf("Comprando promocion especial a:%f\n",OPE);
