@@ -62,6 +62,9 @@ float GTCV = 0;
 float PTON[EMPLEADOS_BARRA_PRIMER_PISO];
 float PTOM[EMPLEADOS_BARRA_HIELO];
 
+//Debug
+int cantidadAtencionesBarraHielo[EMPLEADOS_BARRA_HIELO];
+int cantidadAtencionesPrimerPiso[EMPLEADOS_BARRA_PRIMER_PISO];
 
 //Forward declaration
 float tiempoAtencion();
@@ -134,13 +137,16 @@ void imprimirResultados()
     printf("PECN:%f\nPECM:%f\nPTAN:%f\nPTAM:%f\nGTEV:%f\nGTCV:%f\n",
            PECN,PECM,PTAN,PTAM,GTEV,GTCV);
 
+
     for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++)
     {
         printf("PTON %d: %f\n",i,PTON[i]);
+        printf("Clientes Atendidos Puesto %d: %d\n",i,cantidadAtencionesPrimerPiso[i]);
     }
     for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)
     {
         printf("PTOM %d: %f\n",i,PTOM[i]);
+        printf("Clientes Atendidos Puesto %d: %d\n",i,cantidadAtencionesBarraHielo[i]);
     }
     printf("Cantidad de empleados en la barra del primer piso:%d\nCantidad de empleados en la barra de hielo:%d\n",EMPLEADOS_BARRA_PRIMER_PISO,EMPLEADOS_BARRA_HIELO);
     printf("Porcentaje descuento tragos clasico:%f\n",PORCENTAJE_DESCUENTO_CLASICO);
@@ -148,6 +154,8 @@ void imprimirResultados()
 
     printf("Cantidad de clientes atendidos en la barra del primer piso:%d\n",NTN);
     printf("Cantidad de clientes atendidos en la barra de la camara de hielo:%d\n",NTM);
+
+
     return;
 }
 
@@ -326,29 +334,48 @@ int buscarMinimoTPSCamaraHielo()
 
 int buscarPuestoCamaraHielo()
 {
- printf("Buscando puesto camara hielo\n");
-   int j = 0;
-
-   for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)
-   {
-       if(STOM[i]>STOM[j]) j = i;
-   }
-   printf("Asignado a puesto:%d\n",j);
-   return j;
+    printf("Buscando puesto camara hielo\n");
+    int puesto = buscarPuesto(TPSM,EMPLEADOS_BARRA_HIELO);
+    cantidadAtencionesBarraHielo[puesto] ++;
+    return puesto;
 }
 
 int buscarPuestoPrimerPiso()
 {
-printf("Buscando puesto primer piso\n");
-   int j = 0;
+    printf("Buscando puesto primer piso\n");
+    int puesto = buscarPuesto(TPSN,EMPLEADOS_BARRA_PRIMER_PISO);
+    cantidadAtencionesPrimerPiso[puesto] ++;
+    return puesto;
+}
 
-   for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++)
+int buscarPuesto(int TPS[],int EMPLEADOS)
+{
+   int contadorEmpleadosDesocupados = 0;
+   int empleadosDesocupados[EMPLEADOS];
+
+   for(int i=0;i<EMPLEADOS;i++)
    {
-       if(STON[i]>STON[j]) j = i;
+       if(TPS[i] > TF)
+       {
+           empleadosDesocupados[contadorEmpleadosDesocupados] = i;
+           contadorEmpleadosDesocupados ++;
+       }
    }
+
+   int j = empleadosDesocupados[0];
+   for(int i=0;i<contadorEmpleadosDesocupados;i++)
+   {
+       if(STOM[empleadosDesocupados[i]] >STOM[j]) j = i;
+   }
+
    printf("Asignado a puesto:%d\n",j);
+
+
+
    return j;
 }
+
+
 
 //TODOc
 float tiempoAtencion()
@@ -425,6 +452,8 @@ printf("Inicio de condiciones\n");
     for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) PTON[i]=0;
     for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)PTOM[i]=0;
 
+    for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++)cantidadAtencionesPrimerPiso[i]=0;
+    for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)cantidadAtencionesBarraHielo[i]=0;
 
     return;
 }
