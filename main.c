@@ -5,14 +5,17 @@
 
 
 //Variables de Control
-#define EMPLEADOS_BARRA_PRIMER_PISO 3
-#define EMPLEADOS_BARRA_HIELO 4
-#define PORCENTAJE_DESCUENTO_CLASICO 60
-#define PORCENTAJE_DESCUENTO_ESPECIAL 30
+#define EMPLEADOS_BARRA_PRIMER_PISO 1
+#define EMPLEADOS_BARRA_HIELO 1
+#define PORCENTAJE_DESCUENTO_CLASICO 60.00
+#define PORCENTAJE_DESCUENTO_ESPECIAL 30.00
 
-#define TIEMPO_FINAL 100000
+#define PRECIO_TRAGO_CLASICO 120.00
+#define PRECIO_TRAGO_ESPECIAL 160.00
 
-#define MINUTOS_SEMANA 10080
+#define TIEMPO_FINAL 1000.00
+
+#define MINUTOS_SEMANA 10080.00
 
 #define SALIDA_BARRA_PRIMER_PISO 1
 #define SALIDA_BARRA_HIELO 2
@@ -91,7 +94,7 @@ int main()
     calcularResultados();
     imprimirResultados();
 
-    printf("OK");
+    printf("\nOK");
 
     return 0;
 }
@@ -99,7 +102,7 @@ int main()
 
 void calcularResultados()
 {
-    printf("Calculando resultados\n");
+    printf("\nCalculando resultados\n");
 
     PECN = (SPSN - STAN) / NTN;
     PECM = (SPSM - STAM) / NTM;
@@ -124,7 +127,8 @@ void calcularResultados()
 
 void imprimirResultados()
 {
-printf("Imprimiendo resultados\n");
+    printf("\nImprimiendo resultados\n");
+
     printf("PECN:%f\nPECM:%f\nPTAN:%f\nPTAM:%f\nGTEV:%f\nGTCV:%f\n",
            PECN,PECM,PTAN,PTAM,GTEV,GTCV);
 
@@ -374,15 +378,18 @@ void compra()
 
         if(R <= 80)
         {
-            printf("Comprando promocion clasica\n");
-            float OPC = 240 * (PORCENTAJE_DESCUENTO_CLASICO / 100);
+            float OPC = (PRECIO_TRAGO_CLASICO * 2) * (PORCENTAJE_DESCUENTO_CLASICO / 100.00);
             GPC += OPC;
+
+            printf("Comprando promocion clasica a:%f\n",OPC);
         }
         else
         {
-            printf("Comprando promocion especial\n");
-            float OPE = 320 * (PORCENTAJE_DESCUENTO_ESPECIAL /100);
+            float OPE =  (PRECIO_TRAGO_ESPECIAL * 2) * (PORCENTAJE_DESCUENTO_ESPECIAL /100.00);
             GPE += OPE;
+
+            printf("Comprando promocion especial a:%f\n",OPE);
+
         }
     }
     else printf("Comprando un solo trago\n");
