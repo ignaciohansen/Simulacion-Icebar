@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
-#define TIEMPO_FINAL 10
+#define TIEMPO_FINAL 100000
 
 #define MINUTOS_SEMANA 10080
 
@@ -16,26 +17,26 @@
 #define SALIDA_BARRA_HIELO 2
 #define LLEGADA 3
 
-#define HIGH_VALUE 1000000
+#define HIGH_VALUE TIEMPO_FINAL+1
 
 //Tiempos
-int TF;
-int T;
-int TPSN[EMPLEADOS_BARRA_PRIMER_PISO];
-int TPSM[EMPLEADOS_BARRA_HIELO];
-int TPLL;
+float TF;
+float T;
+float TPSN[EMPLEADOS_BARRA_PRIMER_PISO];
+float TPSM[EMPLEADOS_BARRA_HIELO];
+float TPLL;
 
 //Tiempos Ociosos
-int ITON[EMPLEADOS_BARRA_PRIMER_PISO];
-int ITOM[EMPLEADOS_BARRA_HIELO];
-int STON[EMPLEADOS_BARRA_PRIMER_PISO];
-int STOM[EMPLEADOS_BARRA_HIELO];
+float ITON[EMPLEADOS_BARRA_PRIMER_PISO];
+float ITOM[EMPLEADOS_BARRA_HIELO];
+float STON[EMPLEADOS_BARRA_PRIMER_PISO];
+float STOM[EMPLEADOS_BARRA_HIELO];
 
 //Acumuladores
-int SPSN = 0;
-int SPSM = 0;
-int STAN = 0;
-int STAM = 0;
+float SPSN = 0;
+float SPSM = 0;
+float STAN = 0;
+float STAM = 0;
 float GPE = 0;
 float GPC = 0;
 int NSN = 0;
@@ -53,6 +54,12 @@ float GTCV = 0;
 float PTON[EMPLEADOS_BARRA_PRIMER_PISO];
 float PTOM[EMPLEADOS_BARRA_HIELO];
 
+
+//Forward declaration
+float tiempoAtencion();
+float intervaloArribos();
+float intervaloPrimerPisoACamaraHielo();
+
 int main()
 {
 
@@ -60,7 +67,7 @@ int main()
 
     while (T <= TF)
     {
-        printf("\nTIEMPO:%d\n",T);
+        printf("\nTIEMPO:%f\n",T);
         int puestoBarraPrimerPiso = buscarMinimoTPSPrimerPiso();
         int puestoBarraCamaraHielo = buscarMinimoTPSCamaraHielo();
 
@@ -177,7 +184,7 @@ void salidaBarraCamaraHielo(int puestoBarraCamaraHielo)
 
     if(NSM >= EMPLEADOS_BARRA_HIELO)
     {
-        int TA = tiempoAtencion();
+        float TA = tiempoAtencion();
 
         TPSM[puestoBarraCamaraHielo] = T + TA;
 
@@ -204,7 +211,7 @@ void llegada()
 
     T = TPLL;
 
-    int IA = intervaloArribos();
+    float IA = intervaloArribos();
 
     TPLL = T + IA;
 
@@ -216,7 +223,7 @@ void llegada()
     return;
 }
 
-void llegadaBarraCamaraHielo(int tiempoLlegadaDesdePrimerPiso)
+void llegadaBarraCamaraHielo(float tiempoLlegadaDesdePrimerPiso)
 {
     printf("Llegada camara hielo\n");
     NSM ++;
@@ -246,7 +253,7 @@ void llegadaBarraPrimerPiso()
     {
        int puestoBarraPrimerPiso= buscarPuestoPrimerPiso();
 
-       int TA = tiempoAtencion();
+       float TA = tiempoAtencion();
 
        TPSN[puestoBarraPrimerPiso] = T + TA;
 
@@ -264,7 +271,7 @@ int determinarProximoEvento(int puestoBarraPrimerPiso,int puestoBarraHielo)
 
     if(TPSN[puestoBarraPrimerPiso] <= TPSM[puestoBarraHielo])
     {
-        printf("TPSN:%d\nTPLL:%d\n",TPSN[puestoBarraPrimerPiso],TPLL);
+
         if(TPSN[puestoBarraPrimerPiso] > TPLL) return LLEGADA;
         else return SALIDA_BARRA_PRIMER_PISO;
     }
@@ -328,24 +335,29 @@ printf("Buscando puesto primer piso\n");
    return j;
 }
 
-int tiempoAtencion()
+float tiempoAtencion()
 {
-    return 1;
+
+    float R = (rand()%100)/100;
+    float TA = 3.0 + 3.377 * pow(R,0.8595);
+
+    printf("Tiempo de atencion:%f\n",TA);
+
+    return TA;
 }
 
-int intervaloArribos()
+float intervaloArribos()
 {
-    return 1;
+    return 1.0;
 }
 
-int intervaloPrimerPisoACamaraHielo()
+float intervaloPrimerPisoACamaraHielo()
 {
-    return 1;
+    return 1.0;
 }
 
 void compra()
 {
-printf("Comprando\n");
     float R = rand() % 100;
 
     if(R>30)
@@ -354,17 +366,18 @@ printf("Comprando\n");
 
         if(R <= 80)
         {
+            printf("Comprando promocion clasica\n");
             float OPC = 240 * (PORCENTAJE_DESCUENTO_CLASICO / 100);
             GPC += OPC;
         }
         else
         {
+            printf("Comprando promocion especial\n");
             float OPE = 320 * (PORCENTAJE_DESCUENTO_ESPECIAL /100);
             GPE += OPE;
         }
-
-
     }
+    else printf("Comprando un solo trago\n");
 
     return;
 }
