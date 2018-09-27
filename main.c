@@ -5,8 +5,8 @@
 
 
 //Variables de Control
-#define EMPLEADOS_BARRA_PRIMER_PISO 2
-#define EMPLEADOS_BARRA_HIELO 3
+#define EMPLEADOS_BARRA_PRIMER_PISO 1
+#define EMPLEADOS_BARRA_HIELO 2
 #define PORCENTAJE_DESCUENTO_CLASICO 60.00
 #define PORCENTAJE_DESCUENTO_ESPECIAL 30.00
 
@@ -142,6 +142,7 @@ void imprimirResultados()
     {
         printf("PTOM %d: %f\n",i,PTOM[i]);
     }
+    printf("Cantidad de empleados en la barra del primer piso:%d\nCantidad de empleados en la barra de hielo:%d\n",EMPLEADOS_BARRA_PRIMER_PISO,EMPLEADOS_BARRA_HIELO);
     return;
 }
 
