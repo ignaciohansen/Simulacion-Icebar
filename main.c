@@ -19,7 +19,7 @@
 #define HIGH_VALUE 10000000000000000000
 
 //Tiempos
-int TF = TIEMPO_FINAL;
+int TF;
 int T;
 int TPSN[EMPLEADOS_BARRA_PRIMER_PISO];
 int TPSM[EMPLEADOS_BARRA_HIELO];
@@ -89,6 +89,7 @@ int main()
 
 void calcularResultados()
 {
+    printf("Calculando resultados\n");
     PECN = (SPSN - STAN) / NTN;
     PECM = (SPSM - STAM) / NTM;
 
@@ -112,7 +113,7 @@ void calcularResultados()
 
 void imprimirResultados()
 {
-
+printf("Imprimiendo resultados\n");
     printf("PECN:%f\nPECM:%f\nPTAN:%f\nPTAM:%f\nGTEV:%f\nGTCV:%f\n",
            PECN,PECM,PTAN,PTAM,GTEV,GTCV);
 
@@ -129,6 +130,7 @@ void imprimirResultados()
 
 void salidaBarraPrimerPiso(int puestoBarraPrimerPiso)
 {
+    printf("Salida barra primer piso\n");
 
     SPSN += (TPSN[puestoBarraPrimerPiso] - T) * EMPLEADOS_BARRA_PRIMER_PISO;
     SPSM += (TPSN[puestoBarraPrimerPiso] - T) * EMPLEADOS_BARRA_HIELO;
@@ -164,6 +166,7 @@ void salidaBarraPrimerPiso(int puestoBarraPrimerPiso)
 
 void salidaBarraCamaraHielo(int puestoBarraCamaraHielo)
 {
+    printf("Salida barra camara hielo\n");
     SPSN += (TPSM[puestoBarraCamaraHielo] - T) * EMPLEADOS_BARRA_PRIMER_PISO;
     SPSM += (TPSM[puestoBarraCamaraHielo] - T) * EMPLEADOS_BARRA_HIELO;
 
@@ -194,6 +197,7 @@ void salidaBarraCamaraHielo(int puestoBarraCamaraHielo)
 
 void llegada()
 {
+    printf("Llegada\n");
     SPSN += (TPLL - T) * EMPLEADOS_BARRA_PRIMER_PISO;
     SPSM += (TPLL - T) * EMPLEADOS_BARRA_HIELO;
 
@@ -211,6 +215,7 @@ void llegada()
 
 void llegadaBarraCamaraHielo(int tiempoLlegadaDesdePrimerPiso)
 {
+    printf("Llegada camara hielo\n");
     NSM ++;
 
     if(NSM <= EMPLEADOS_BARRA_HIELO)
@@ -231,6 +236,7 @@ void llegadaBarraCamaraHielo(int tiempoLlegadaDesdePrimerPiso)
 
 void llegadaBarraPrimerPiso()
 {
+    printf("Llegada barra primer piso\n");
       NSN ++;
 
     if(NSN <= EMPLEADOS_BARRA_PRIMER_PISO)
@@ -251,7 +257,7 @@ void llegadaBarraPrimerPiso()
 
 int determinarProximoEvento(int puestoBarraPrimerPiso,int puestoBarraHielo)
 {
-
+printf("Determinando proximo evento\n");
     if(TPSN[puestoBarraPrimerPiso] <= TPSM[puestoBarraHielo])
     {
         if(TPSN[puestoBarraPrimerPiso] <= TPLL) return SALIDA_BARRA_PRIMER_PISO;
@@ -266,10 +272,10 @@ int determinarProximoEvento(int puestoBarraPrimerPiso,int puestoBarraHielo)
 
 int buscarMinimoTPSPrimerPiso()
 {
-    int i =0;
+    printf("Buscando minimo TPS primer piso\n");
     int j = 0;
 
-   for(int k=0;k<EMPLEADOS_BARRA_PRIMER_PISO;k++)
+   for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++)
    {
        if(TPSN[i]<=TPSN[j]) j = i;
    }
@@ -278,10 +284,11 @@ int buscarMinimoTPSPrimerPiso()
 
 int buscarMinimoTPSCamaraHielo()
 {
-    int i =0;
+    printf("Buscando minimo TPS camara hielo\n");
+
     int j = 0;
 
-   for(int k=0;k<EMPLEADOS_BARRA_HIELO;k++)
+   for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)
    {
        if(TPSM[i]<=TPSM[j]) j = i;
    }
@@ -290,10 +297,10 @@ int buscarMinimoTPSCamaraHielo()
 
 int buscarPuestoCamaraHielo()
 {
-   int i =0;
+ printf("Buscando puesto camara hielo\n");
    int j = 0;
 
-   for(int k=0;k<EMPLEADOS_BARRA_HIELO;k++)
+   for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)
    {
        if(STOM[i]>STOM[j]) j = i;
    }
@@ -302,10 +309,10 @@ int buscarPuestoCamaraHielo()
 
 int buscarPuestoPrimerPiso()
 {
-   int i =0;
+printf("Buscando puesto primer piso\n");
    int j = 0;
 
-   for(int k=0;k<EMPLEADOS_BARRA_PRIMER_PISO;k++)
+   for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++)
    {
        if(STON[i]>STON[j]) j = i;
    }
@@ -329,7 +336,7 @@ int intervaloPrimerPisoACamaraHielo()
 
 void compra()
 {
-
+printf("Comprando\n");
     float R = rand() % 100;
 
     if(R>30)
@@ -357,11 +364,12 @@ void compra()
 
 void iniciarCondicionesIniciales()
 {
-
+printf("Inicio de condiciones\n");
     T = 0;
+    TF = TIEMPO_FINAL;
+    TPLL = 0;
     for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) TPSN[i]=0;
     for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)TPSM[i]=0;
-    TPLL = 0;
 
     for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) ITON[i]=0;
     for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)ITOM[i]=0;
@@ -369,7 +377,7 @@ void iniciarCondicionesIniciales()
     for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) STON[i]=0;
     for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)STOM[i]=0;
 
-     for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) PTON[i]=0;
+    for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) PTON[i]=0;
     for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)PTOM[i]=0;
 
 
