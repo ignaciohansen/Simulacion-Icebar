@@ -67,11 +67,11 @@ int cantidadAtencionesBarraHielo[EMPLEADOS_BARRA_HIELO];
 int cantidadAtencionesPrimerPiso[EMPLEADOS_BARRA_PRIMER_PISO];
 
 //Forward declaration
-float tiempoAtencion();
-float intervaloArribos();
-float intervaloPrimerPisoACamaraHielo();
+float tiempoAtencion(void);
+float intervaloArribos(void);
+float intervaloPrimerPisoACamaraHielo(void);
 
-int main()
+int main(void)
 {
 
     iniciarCondicionesIniciales();
@@ -106,7 +106,7 @@ int main()
 }
 
 
-void calcularResultados()
+void calcularResultados(void)
 {
     printf("\nCalculando resultados\n");
 
@@ -131,7 +131,7 @@ void calcularResultados()
     return;
 }
 
-void imprimirResultados()
+void imprimirResultados(void)
 {
     printf("\nImprimiendo resultados\n");
 
@@ -235,7 +235,7 @@ void salidaBarraCamaraHielo(int puestoBarraCamaraHielo)
     return;
 }
 
-void llegada()
+void llegada(void)
 {
 
     SPSN += (TPLL - T) * NSN;
@@ -277,7 +277,7 @@ void llegadaBarraCamaraHielo(float tiempoLlegadaDesdePrimerPiso)
     }
 }
 
-void llegadaBarraPrimerPiso()
+void llegadaBarraPrimerPiso(void)
 {
     printf("Llegada barra primer piso\n");
       NSN ++;
@@ -316,7 +316,7 @@ int determinarProximoEvento(int puestoBarraPrimerPiso,int puestoBarraHielo)
     }
 }
 
-int buscarMinimoTPSPrimerPiso()
+int buscarMinimoTPSPrimerPiso(void)
 {
     printf("Buscando minimo TPS primer piso\n");
     return buscarMinimoTPS(TPSN,EMPLEADOS_BARRA_PRIMER_PISO);
@@ -341,7 +341,7 @@ int buscarMinimoTPS(int TPS[],int EMPLEADOS)
 
 }
 
-int buscarPuestoCamaraHielo()
+int buscarPuestoCamaraHielo(void)
 {
     printf("Buscando puesto camara hielo\n");
     int puesto = buscarPuesto(TPSM,STOM,EMPLEADOS_BARRA_HIELO,cantidadAtencionesBarraHielo);
@@ -349,7 +349,7 @@ int buscarPuestoCamaraHielo()
     return puesto;
 }
 
-int buscarPuestoPrimerPiso()
+int buscarPuestoPrimerPiso(void)
 {
     printf("Buscando puesto primer piso\n");
     int puesto = buscarPuesto(TPSN,STON,EMPLEADOS_BARRA_PRIMER_PISO,cantidadAtencionesPrimerPiso);
@@ -386,7 +386,7 @@ int buscarPuesto(int TPS[],int STO[],int EMPLEADOS,int cantidadAtenciones[])
 }
 
 
-float tiempoAtencion()
+float tiempoAtencion(void)
 {
     float R = (rand()%100) / 100.00;
     float TA = 3.0 + 3.377 * pow(R,1/0.8595);
@@ -394,7 +394,7 @@ float tiempoAtencion()
     return TA;
 }
 
-float intervaloArribos()
+float intervaloArribos(void)
 {
     float R = (rand()%100) / 100.00;
     float IA = 2.9114 + 6.9886 * pow(R,1/0.74772);
@@ -403,7 +403,7 @@ float intervaloArribos()
 }
 
 
-float intervaloPrimerPisoACamaraHielo()
+float intervaloPrimerPisoACamaraHielo(void)
 {
     float R = (rand()%100) / 100.00;
     float IPH = 20.1 + 19.9 * pow(R,1/0.92297);
@@ -411,7 +411,7 @@ float intervaloPrimerPisoACamaraHielo()
     return IPH;
 }
 
-void compra()
+void compra(void)
 {
     float R = rand() % 100;
 
@@ -442,7 +442,7 @@ void compra()
 
 
 
-void iniciarCondicionesIniciales()
+void iniciarCondicionesIniciales(void)
 {
 printf("Inicio de condiciones\n");
     T = 0;
