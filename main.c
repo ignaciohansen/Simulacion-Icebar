@@ -16,7 +16,7 @@
 #define SALIDA_BARRA_HIELO 2
 #define LLEGADA 3
 
-#define HIGH_VALUE 10000000000000000000
+#define HIGH_VALUE 1000000
 
 //Tiempos
 int TF;
@@ -120,11 +120,11 @@ printf("Imprimiendo resultados\n");
 
     for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++)
     {
-        printf("PTON %d: %f",i,PTON[i]);
+        printf("PTON %d: %f\n",i,PTON[i]);
     }
     for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)
     {
-        printf("PTOM %d: %f",i,PTOM[i]);
+        printf("PTOM %d: %f\n",i,PTOM[i]);
     }
     return;
 }
@@ -206,6 +206,8 @@ void llegada()
 
     int IA = intervaloArribos();
 
+    TPLL = T + IA;
+
     float R = rand() % 100;
 
     if(R<=75)llegadaBarraCamaraHielo();
@@ -258,11 +260,13 @@ void llegadaBarraPrimerPiso()
 
 int determinarProximoEvento(int puestoBarraPrimerPiso,int puestoBarraHielo)
 {
-printf("Determinando proximo evento\n");
+    printf("Determinando proximo evento\n");
+
     if(TPSN[puestoBarraPrimerPiso] <= TPSM[puestoBarraHielo])
     {
-        if(TPSN[puestoBarraPrimerPiso] <= TPLL) return SALIDA_BARRA_PRIMER_PISO;
-        else return LLEGADA;
+        printf("TPSN:%d\nTPLL:%d\n",TPSN[puestoBarraPrimerPiso],TPLL);
+        if(TPSN[puestoBarraPrimerPiso] > TPLL) return LLEGADA;
+        else return SALIDA_BARRA_PRIMER_PISO;
     }
     else
     {
@@ -280,6 +284,7 @@ int buscarMinimoTPSPrimerPiso()
    {
        if(TPSN[i]<=TPSN[j]) j = i;
    }
+   printf("Minimo TPS en puesto:%d\n",j);
    return j;
 }
 
@@ -293,6 +298,7 @@ int buscarMinimoTPSCamaraHielo()
    {
        if(TPSM[i]<=TPSM[j]) j = i;
    }
+   printf("Minimo TPS en puesto:%d\n",j);
    return j;
 }
 
@@ -305,6 +311,7 @@ int buscarPuestoCamaraHielo()
    {
        if(STOM[i]>STOM[j]) j = i;
    }
+   printf("Asignado a puesto:%d\n",j);
    return j;
 }
 
@@ -317,6 +324,7 @@ printf("Buscando puesto primer piso\n");
    {
        if(STON[i]>STON[j]) j = i;
    }
+   printf("Asignado a puesto:%d\n",j);
    return j;
 }
 
