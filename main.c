@@ -23,7 +23,7 @@
 #define SALIDA_BARRA_HIELO 2
 #define LLEGADA 3
 
-#define HIGH_VALUE TIEMPO_FINAL+1
+#define HIGH_VALUE TIEMPO_FINAL*10
 
 //Tiempos
 float TF;
@@ -79,6 +79,7 @@ int main()
     while (T <= TF)
     {
         printf("\nTIEMPO:%f\n",T);
+
         int puestoBarraPrimerPiso = buscarMinimoTPSPrimerPiso();
         int puestoBarraCamaraHielo = buscarMinimoTPSCamaraHielo();
 
@@ -172,17 +173,22 @@ void salidaBarraPrimerPiso(int puestoBarraPrimerPiso)
 
     if(NSN >= EMPLEADOS_BARRA_PRIMER_PISO)
     {
-        int TA = tiempoAtencion();
-        TPSN[puestoBarraPrimerPiso] = T + TA;
 
+        float TA = tiempoAtencion();
+        TPSN[puestoBarraPrimerPiso] = T + TA;
+        printf("Tiempo Proximo Salida M: %f\n",TPSM[puestoBarraPrimerPiso]);
         STAN += TA;
 
         compra();
     }
     else
     {
+        printf("Puesto ocioso: %d\n",puestoBarraPrimerPiso);
+
+
         ITON[puestoBarraPrimerPiso] = T;
 
+        printf("Tiempo Proximo Salida N: %f\n",TPSN[puestoBarraPrimerPiso]);
         TPSN[puestoBarraPrimerPiso] = HIGH_VALUE;
     }
 
@@ -207,19 +213,22 @@ void salidaBarraCamaraHielo(int puestoBarraCamaraHielo)
 
     if(NSM >= EMPLEADOS_BARRA_HIELO)
     {
+
         float TA = tiempoAtencion();
 
         TPSM[puestoBarraCamaraHielo] = T + TA;
-
+        printf("Tiempo Proximo Salida M: %f\n",TPSM[puestoBarraCamaraHielo]);
         STAM += TA;
 
         compra();
     }
     else
     {
+        printf("Puesto ocioso: %d\n",puestoBarraCamaraHielo);
         ITOM[puestoBarraCamaraHielo] = T;
 
         TPSM[puestoBarraCamaraHielo] = HIGH_VALUE;
+        printf("Tiempo Proximo Salida M: %f\n",TPSM[puestoBarraCamaraHielo]);
     }
 
     NTM ++;
@@ -228,7 +237,7 @@ void salidaBarraCamaraHielo(int puestoBarraCamaraHielo)
 
 void llegada()
 {
-    printf("Llegada\n");
+
     SPSN += (TPLL - T) * NSN;
     SPSM += (TPLL - T) * NSM;
 
@@ -240,7 +249,7 @@ void llegada()
 
     float R = rand() % 100;
 
-    if(R<=75)llegadaBarraCamaraHielo(0);
+    if(R<=75)llegadaBarraCamaraHielo(0.00);
     else llegadaBarraPrimerPiso();
 
     return;
@@ -249,6 +258,7 @@ void llegada()
 void llegadaBarraCamaraHielo(float tiempoLlegadaDesdePrimerPiso)
 {
     printf("Llegada camara hielo\n");
+    printf("Tiempo Llegada desde Primer Piso: %f\n",tiempoLlegadaDesdePrimerPiso);
     NSM ++;
 
     if(NSM <= EMPLEADOS_BARRA_HIELO)
@@ -258,7 +268,7 @@ void llegadaBarraCamaraHielo(float tiempoLlegadaDesdePrimerPiso)
        int TA = tiempoAtencion();
 
        TPSM[puestoBarraCamaraHielo] = T + tiempoLlegadaDesdePrimerPiso + TA;
-
+        printf("Tiempo Proximo Salida M: %f\n",TPSM[puestoBarraCamaraHielo]);
        STAM += TA;
 
        STOM[puestoBarraCamaraHielo] += T + tiempoLlegadaDesdePrimerPiso - ITOM[puestoBarraCamaraHielo];
@@ -279,6 +289,7 @@ void llegadaBarraPrimerPiso()
        float TA = tiempoAtencion();
 
        TPSN[puestoBarraPrimerPiso] = T + TA;
+       printf("Tiempo Proximo Salida N: %f\n",TPSN[puestoBarraPrimerPiso]);
 
        STAN += TA;
 
@@ -308,34 +319,32 @@ int determinarProximoEvento(int puestoBarraPrimerPiso,int puestoBarraHielo)
 int buscarMinimoTPSPrimerPiso()
 {
     printf("Buscando minimo TPS primer piso\n");
-    int j = 0;
-
-   for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++)
-   {
-       if(TPSN[i]<=TPSN[j]) j = i;
-   }
-   printf("Minimo TPS en puesto:%d\n",j);
-   return j;
+    return buscarMinimoTPS(TPSN,EMPLEADOS_BARRA_PRIMER_PISO);
 }
 
 int buscarMinimoTPSCamaraHielo()
 {
     printf("Buscando minimo TPS camara hielo\n");
+    return buscarMinimoTPS(TPSM,EMPLEADOS_BARRA_HIELO);
+}
 
+int buscarMinimoTPS(int TPS[],int EMPLEADOS)
+{
     int j = 0;
 
-   for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)
+   for(int i=0;i<EMPLEADOS;i++)
    {
-       if(TPSM[i]<=TPSM[j]) j = i;
+       if(TPS[i]<=TPS[j]) j = i;
    }
    printf("Minimo TPS en puesto:%d\n",j);
    return j;
+
 }
 
 int buscarPuestoCamaraHielo()
 {
     printf("Buscando puesto camara hielo\n");
-    int puesto = buscarPuesto(TPSM,EMPLEADOS_BARRA_HIELO);
+    int puesto = buscarPuesto(TPSM,STOM,EMPLEADOS_BARRA_HIELO,cantidadAtencionesBarraHielo);
     cantidadAtencionesBarraHielo[puesto] ++;
     return puesto;
 }
@@ -343,12 +352,12 @@ int buscarPuestoCamaraHielo()
 int buscarPuestoPrimerPiso()
 {
     printf("Buscando puesto primer piso\n");
-    int puesto = buscarPuesto(TPSN,EMPLEADOS_BARRA_PRIMER_PISO);
+    int puesto = buscarPuesto(TPSN,STON,EMPLEADOS_BARRA_PRIMER_PISO,cantidadAtencionesPrimerPiso);
     cantidadAtencionesPrimerPiso[puesto] ++;
     return puesto;
 }
 
-int buscarPuesto(int TPS[],int EMPLEADOS)
+int buscarPuesto(int TPS[],int STO[],int EMPLEADOS,int cantidadAtenciones[])
 {
    int contadorEmpleadosDesocupados = 0;
    int empleadosDesocupados[EMPLEADOS];
@@ -361,11 +370,12 @@ int buscarPuesto(int TPS[],int EMPLEADOS)
            contadorEmpleadosDesocupados ++;
        }
    }
-
+    printf("Cantidad de empleados desocupados:%d\n",contadorEmpleadosDesocupados);
    int j = empleadosDesocupados[0];
+
    for(int i=0;i<contadorEmpleadosDesocupados;i++)
    {
-       if(STOM[empleadosDesocupados[i]] >STOM[j]) j = i;
+       if(cantidadAtenciones[empleadosDesocupados[i]] < cantidadAtenciones[j]) j = empleadosDesocupados[i];
    }
 
    printf("Asignado a puesto:%d\n",j);
@@ -376,8 +386,6 @@ int buscarPuesto(int TPS[],int EMPLEADOS)
 }
 
 
-
-//TODOc
 float tiempoAtencion()
 {
     float R = (rand()%100) / 100.00;
@@ -394,7 +402,7 @@ float intervaloArribos()
     return IA;
 }
 
-//TODO
+
 float intervaloPrimerPisoACamaraHielo()
 {
     float R = (rand()%100) / 100.00;
@@ -439,7 +447,7 @@ void iniciarCondicionesIniciales()
 printf("Inicio de condiciones\n");
     T = 0;
     TF = TIEMPO_FINAL;
-    TPLL = 0;
+    TPLL = 1;
     for(int i=0;i<EMPLEADOS_BARRA_PRIMER_PISO;i++) TPSN[i]=HIGH_VALUE;
     for(int i=0;i<EMPLEADOS_BARRA_HIELO;i++)TPSM[i]=HIGH_VALUE;
 
