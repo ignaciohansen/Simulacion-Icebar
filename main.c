@@ -5,10 +5,10 @@
 
 
 //Variables de Control
-#define EMPLEADOS_BARRA_PRIMER_PISO 4
-#define EMPLEADOS_BARRA_HIELO 4
-#define PORCENTAJE_DESCUENTO_CLASICO 60.00
-#define PORCENTAJE_DESCUENTO_ESPECIAL 30.00
+#define EMPLEADOS_BARRA_PRIMER_PISO 2
+#define EMPLEADOS_BARRA_HIELO 1
+#define PORCENTAJE_DESCUENTO_CLASICO 5.00 // 5 a 20
+#define PORCENTAJE_DESCUENTO_ESPECIAL 5.00 //5 a 10
 
 #define PRECIO_TRAGO_CLASICO 120.00
 #define PRECIO_TRAGO_ESPECIAL 160.00
@@ -149,12 +149,17 @@ void imprimirResultados(void)
         printf("PTOM %d: %f\n",i,PTOM[i]);
         printf("Clientes Atendidos Puesto %d: %d\n",i,cantidadAtencionesBarraHielo[i]);
     }
+    printf("Cantidad de clientes atendidos en la barra del primer piso:%d\n",NTN);
+    printf("Cantidad de clientes atendidos en la barra de la camara de hielo:%d\n",NTM);
+
+    printf("Ganancia acumulada por venta de promocion clasico: %f\n",GPC);
+    printf("Ganancia acumulada por venta de promocion especial: %f\n",GPE);
+
+
     printf("Cantidad de empleados en la barra del primer piso:%d\nCantidad de empleados en la barra de hielo:%d\n",EMPLEADOS_BARRA_PRIMER_PISO,EMPLEADOS_BARRA_HIELO);
     printf("Porcentaje descuento tragos clasico:%f\n",PORCENTAJE_DESCUENTO_CLASICO);
     printf("Porcentaje descuento tragos especiales:%f\n",PORCENTAJE_DESCUENTO_ESPECIAL);
 
-    printf("Cantidad de clientes atendidos en la barra del primer piso:%d\n",NTN);
-    printf("Cantidad de clientes atendidos en la barra de la camara de hielo:%d\n",NTM);
 
 
     return;
@@ -421,14 +426,14 @@ void compra(void)
 
         if(R <= 80)
         {
-            float OPC = (PRECIO_TRAGO_CLASICO * CANTIDAD_TRAGOS_PROMO) * (PORCENTAJE_DESCUENTO_CLASICO / 100.00);
+            float OPC = (PRECIO_TRAGO_CLASICO * CANTIDAD_TRAGOS_PROMO) * ((100.00-PORCENTAJE_DESCUENTO_CLASICO) / 100.00);
             GPC += OPC;
 
             printf("Comprando promocion clasica a:%f\n",OPC);
         }
         else
         {
-            float OPE =  (PRECIO_TRAGO_ESPECIAL * CANTIDAD_TRAGOS_PROMO) * (PORCENTAJE_DESCUENTO_ESPECIAL /100.00);
+            float OPE =  (PRECIO_TRAGO_ESPECIAL * CANTIDAD_TRAGOS_PROMO) * ((100.00 - PORCENTAJE_DESCUENTO_ESPECIAL) /100.00);
             GPE += OPE;
 
             printf("Comprando promocion especial a:%f\n",OPE);
